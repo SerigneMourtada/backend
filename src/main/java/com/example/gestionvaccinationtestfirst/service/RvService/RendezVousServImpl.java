@@ -147,7 +147,7 @@ public class RendezVousServImpl implements RendezVousServ{
            throw  new ParentNotFoundException("Parent not Found");
 
        //Ajouter les rv dans la liste des rv du user recuperer
-        user.getRendezVousList().add(rendezVousMapper.fromRendezVousDTO(rendezVousDTO));
+        /**user.getRendezVousList().add(rendezVousMapper.fromRendezVousDTO(rendezVousDTO));
          parent.setRendezVous(rendezVousMapper.fromRendezVousDTO(rendezVousDTO));
 
         rendezVousDTO.setUtilisateurDTO(utilisateurMapper.fromUtilisateur(user));
@@ -159,7 +159,8 @@ public class RendezVousServImpl implements RendezVousServ{
 
         Rendez_Vous rendez_vous= rendezVousRepository.save(rv);
 
-        return rendezVousMapper.fromRendezVous(rendez_vous);
+        return rendezVousMapper.fromRendezVous(rendez_vous);**/
+        return null;
 
     }
 

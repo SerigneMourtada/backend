@@ -5,7 +5,6 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -29,16 +28,9 @@ public class Utilisateur {
 
     @ManyToOne
     @JoinColumn(name = "centreVaccination_id")
-    private CentreVaccination centreVaccination;
+    private Centre centre;
 
-    @OneToMany(mappedBy ="utilisateur",cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Rendez_Vous> rendezVousList=new ArrayList<>();
-
-
-    @OneToMany(mappedBy ="utilisateur",cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Vaccination> vaccinationList;
-
-    @OneToMany(mappedBy = "utilisateur",cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "parent",cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Carnet> carnetList;
 
 

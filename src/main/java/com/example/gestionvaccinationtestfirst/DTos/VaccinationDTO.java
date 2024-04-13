@@ -23,7 +23,7 @@ public class VaccinationDTO {
 
     private VaccinDTO vaccinDTO;
 
-    private CarnetVaccinationDTO carnetVaccinationDTO;
+    private CarnetDTO carnetVaccinationDTO;
 
     private UtilisateurDTO utilisateurDTO;
 

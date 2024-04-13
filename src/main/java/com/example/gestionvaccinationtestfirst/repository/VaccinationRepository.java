@@ -11,7 +11,7 @@ import java.util.List;
 
 @Repository
 public interface VaccinationRepository extends JpaRepository<Vaccination,Long> {
-    @Query("SELECT v FROM Vaccination v JOIN FETCH v.enfant e JOIN FETCH v.vaccin WHERE e.id = :enfantId")
+    /**@Query("SELECT v FROM Vaccination v JOIN FETCH v.enfant e JOIN FETCH v.vaccin WHERE e.id = :enfantId")
     List<Object[]> findVaccinationsByEnfantId(@Param("enfantId") Long enfantId);
 
 
@@ -20,5 +20,7 @@ public interface VaccinationRepository extends JpaRepository<Vaccination,Long> {
     List<Object[]> findCarnetVaccinationByEnfantId(@Param("enfantId") Long enfantId);
 
     List<Vaccination> findVaccinationsById(Long enfantId);
+
+    **/
 
 }

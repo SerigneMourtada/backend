@@ -2,9 +2,11 @@ package com.example.gestionvaccinationtestfirst.model;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
+import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.experimental.FieldDefaults;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -14,24 +16,26 @@ import java.util.List;
 
 @Entity
 @Data
-@AllArgsConstructor @NoArgsConstructor
+@AllArgsConstructor 
+@NoArgsConstructor
+@FieldDefaults(level = AccessLevel.PRIVATE)
 public class Enfant {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private  Long id;
+    Long id;
 
     private String nom;
 
     private String prenom;
 
-    private  String sexe;
+    String sexe;
 
     private LocalDate dateDeNaissance;
 
    @ManyToOne
-    private Parent parent;
+    Parent parent;
 
    @OneToMany(mappedBy = "enfant",cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Consultation> consultations;
+    List<Consultation> consultations;
 
 
    @OneToOne(mappedBy = "enfant",cascade = CascadeType.ALL, orphanRemoval = true)

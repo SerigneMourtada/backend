@@ -1,12 +1,6 @@
 package com.example.gestionvaccinationtestfirst.DTos;
 
-import com.example.gestionvaccinationtestfirst.model.CentreVaccination;
-import com.example.gestionvaccinationtestfirst.model.Enfant;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToMany;
 import lombok.Data;
-
-import java.util.Collection;
 
 @Data
 public class ParentDTO{

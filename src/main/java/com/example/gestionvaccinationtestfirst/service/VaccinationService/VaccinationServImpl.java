@@ -70,8 +70,8 @@ public class VaccinationServImpl implements VaccinationServ {
 
     }
 
-    @Override
-    public VaccinationDTO saveVaccinatio(VaccinationDTO vaccinationDTO, Long enfantId, Long vaccinId,Long carnetId,Long userId) throws EnfantNotFoundException, VaccinNotFoundException, UtilisateurNotFoundException, CarnetVaccinationNotFoundException {
+    /**@Override
+    public VaccinationDTO saveVaccinatio(VaccinationDTO vaccinationDTO, Long enfantId, Long vaccinId,Long carnetId,Long userId) throws EnfantNotFoundException, VaccinNotFoundException, UtilisateurNotFoundException, EntityNotFoundException {
             Enfant enfant=enfantRepository.findById(enfantId)
                     .orElseThrow(()->new EnfantNotFoundException("Enfant Does not Found"));
             Vaccin vaccin=vaccinRepository.findById(vaccinId)
@@ -81,12 +81,12 @@ public class VaccinationServImpl implements VaccinationServ {
                     .orElseThrow(()->new UtilisateurNotFoundException("User Does not Found"));
 
             Carnet carnet=carnetRepository.findById(carnetId)
-                    .orElseThrow(()->new CarnetVaccinationNotFoundException("Carnet does not found"));
+                    .orElseThrow(()->new EntityNotFoundException("Carnet does not found"));
 
             EnfantDTO enfantDTO=enfantMapper.fromEnfant(enfant);
             VaccinDTO vaccinDTO=vaccinMapper.fromVaccin(vaccin);
             UtilisateurDTO utilisateurDTO=utilisateurMapper.fromUtilisateur(user);
-            CarnetVaccinationDTO carnetDTO=carnetMapper.fromCarnet(carnet);
+            CarnetDTO carnetDTO=carnetMapper.asCarnetDTO(carnet);
 
             vaccinationDTO.setEnfantDTO(enfantDTO);
             vaccinationDTO.setVaccinDTO(vaccinDTO);
@@ -98,13 +98,13 @@ public class VaccinationServImpl implements VaccinationServ {
             Vaccination vaccination1=vaccinationRepository.save(vaccination);
 
         return vaccinationMapper.fromVaccination(vaccination1);
-    }
+    }**/
 
     @Override
     public VaccinationDTO updateVaccination(VaccinationDTO vaccinationDTO) {
         return null;
     }
-    @Override
+    /**@Override
     public List<HistoriqueDeVaccinationDTO> getHistoriqueVaccinationById(Long enfantId){
         List<Object[]> results=vaccinationRepository.findVaccinationsByEnfantId(enfantId);
         List<HistoriqueDeVaccinationDTO> dtos=new ArrayList<>();
@@ -120,11 +120,11 @@ public class VaccinationServImpl implements VaccinationServ {
         }
         return dtos;
 
-    }
+    }**/
 
 
 
-    @Override
+    /**@Override
     public List<VaccinationDTO> getHistory(Long enfantId) {
 
         List<Vaccination> vaccinationList=vaccinationRepository.findVaccinationsById(enfantId);
@@ -134,14 +134,13 @@ public class VaccinationServImpl implements VaccinationServ {
                 .collect(Collectors.toList());
         return vaccinationDTOList;
     }
-
+**/
     @Override
     public void ValiderVaccination(Long vaccinationId) throws VaccinationNotFound {
         Vaccination vaccination=vaccinationRepository.findById(vaccinationId)
 
                 .orElseThrow(()->new VaccinationNotFound("Vaccination Not Exist"));
 
-                vaccination.setEstEffectuer(true);
                 //vaccination.setDateVaccinationActuellle(LocalDate.now());
 
     }

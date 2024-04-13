@@ -1,6 +1,5 @@
 package com.example.gestionvaccinationtestfirst.controller;
 
-import com.example.gestionvaccinationtestfirst.DTos.CarnetVaccinationDTO;
 import com.example.gestionvaccinationtestfirst.DTos.HistoriqueDeVaccinationDTO;
 import com.example.gestionvaccinationtestfirst.DTos.VaccinationDTO;
 import com.example.gestionvaccinationtestfirst.Excepyion.*;
@@ -29,12 +28,12 @@ public class VaccinationController {
         return vaccinationServ.getVaccinationById(vaccinationId);
     }
 
-    @PostMapping("/vaccinations/{enfantId}/{vaccinId}/{carnetId}/{userId}")
+    /**@PostMapping("/vaccinations/{enfantId}/{vaccinId}/{carnetId}/{userId}")
     public VaccinationDTO saveVaccination(@RequestBody VaccinationDTO vaccinationDTO,
                                           @PathVariable(name="enfantId") Long enfantId,
                                           @PathVariable(name="vaccinId") Long vaccinId,
                                           @PathVariable(name="carnetId") Long carnetId,
-                                          @PathVariable(name="userId") Long userId) throws EnfantNotFoundException, VaccinNotFoundException, CarnetVaccinationNotFoundException, UtilisateurNotFoundException {
+                                          @PathVariable(name="userId") Long userId) throws EnfantNotFoundException, VaccinNotFoundException, EntityNotFoundException, UtilisateurNotFoundException {
         return vaccinationServ.saveVaccinatio(vaccinationDTO,enfantId,vaccinId,carnetId,userId);
 
     }
@@ -51,7 +50,7 @@ public class VaccinationController {
     @GetMapping("/vaccinations/{enfantId}/historique")
     public List<VaccinationDTO> getHistoryVaccinationEnfant(@PathVariable Long enfantId){
             return vaccinationServ.getHistory(enfantId);
-    }
+    }**/
 
 
 

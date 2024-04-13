@@ -24,14 +24,6 @@ public class Vaccination {
 
     private Long nombreDeDose;
 
-    private Boolean estEffectuer;
-
-    private String siteDadministration;
-
-
-    @ManyToOne
-    @JoinColumn(name = "enfant_id")
-    private Enfant enfant;
 
     @ManyToOne
     @JoinColumn(name = "vaccin_id")
@@ -40,9 +32,6 @@ public class Vaccination {
 
     @ManyToOne
     private  Carnet carnet;
-
-    @ManyToOne
-    private Utilisateur utilisateur;
 
 
 }

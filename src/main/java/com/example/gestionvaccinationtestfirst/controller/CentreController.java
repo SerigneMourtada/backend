@@ -1,8 +1,8 @@
 package com.example.gestionvaccinationtestfirst.controller;
 
-import com.example.gestionvaccinationtestfirst.DTos.CentreVaccinationDTO;
-import com.example.gestionvaccinationtestfirst.Excepyion.CentreNotFoundException;
-import com.example.gestionvaccinationtestfirst.service.CentreVaccinationService.CentreVaccServ;
+import com.example.gestionvaccinationtestfirst.DTos.CentreDTO;
+import com.example.gestionvaccinationtestfirst.service.CentreVaccinationService.CentreService;
+import com.example.gestionvaccinationtestfirst.Excepyion.EntityNotFoundException;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -13,41 +13,41 @@ import java.util.List;
 @AllArgsConstructor
 @CrossOrigin("*")
 public class CentreController {
-    private CentreVaccServ centreVaccServ;
+    private CentreService centreService;
 
     @GetMapping("/centres")
-    public List<CentreVaccinationDTO> getAllCentres() throws CentreNotFoundException {
-        return centreVaccServ.getAllCentre();
+    public List<CentreDTO> getAllCentres()  {
+        return  centreService.getAllCentre();
     }
 
     @GetMapping("/centres/{centreId}")
-    public CentreVaccinationDTO
-    getCentreById(@PathVariable(name = "centreId") Long centreId) throws CentreNotFoundException {
-        return centreVaccServ.getCentreById(centreId);
+    public CentreDTO
+    getCentreById(@PathVariable(name = "centreId") Long centreId)  {
+        return centreService.getCentreById(centreId);
     }
 
     @PostMapping("/centres")
-    public CentreVaccinationDTO
+    public CentreDTO
     saveCentreVaccination(
-            @RequestBody CentreVaccinationDTO centreVaccinationDTO
+            @RequestBody CentreDTO CentreDTO
             ){
 
-            return centreVaccServ.saveCentreVaccination(centreVaccinationDTO);
+            return centreService.saveCentreVaccination(CentreDTO);
     }
 
     @DeleteMapping("/centres/{centreId}")
     public void deleCentre(@PathVariable Long centreId){
-        centreVaccServ.deleteCentre(centreId);
+        centreService.deleteCentre(centreId);
     }
 
     @PutMapping("/centres/{centreId}")
-    public CentreVaccinationDTO updateCentre
-            (@RequestBody CentreVaccinationDTO centreVaccinationDTO,
+    public CentreDTO updateCentre
+            (@RequestBody CentreDTO CentreDTO,
              @PathVariable(name = "centreId") Long centreId){
 
-        centreVaccinationDTO.setId(centreId);
+        CentreDTO.setId(centreId);
 
-            return centreVaccServ.updateCentre(centreVaccinationDTO);
+            return centreService.updateCentre(CentreDTO);
     }
 
 

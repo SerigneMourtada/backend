@@ -1,14 +1,14 @@
 package com.example.gestionvaccinationtestfirst.service.UserService;
 
-import com.example.gestionvaccinationtestfirst.DTos.CentreVaccinationDTO;
+import com.example.gestionvaccinationtestfirst.DTos.CentreDTO;
 import com.example.gestionvaccinationtestfirst.DTos.UtilisateurDTO;
-import com.example.gestionvaccinationtestfirst.Excepyion.CentreNotFoundException;
+import com.example.gestionvaccinationtestfirst.Excepyion.EntityNotFoundException;
 import com.example.gestionvaccinationtestfirst.Excepyion.UtilisateurNotFoundException;
 import com.example.gestionvaccinationtestfirst.dtoMapper.Utilisateur.UtilisateurMapper;
-import com.example.gestionvaccinationtestfirst.dtoMapper.centreMapper.CentreVaccMapper;
-import com.example.gestionvaccinationtestfirst.model.CentreVaccination;
+import com.example.gestionvaccinationtestfirst.dtoMapper.centreMapper.CentreMapper;
+import com.example.gestionvaccinationtestfirst.model.Centre;
 import com.example.gestionvaccinationtestfirst.model.Utilisateur;
-import com.example.gestionvaccinationtestfirst.repository.CentreVaccinationRepository;
+import com.example.gestionvaccinationtestfirst.repository.CentreRepository;
 import com.example.gestionvaccinationtestfirst.repository.UtilisateurRepository;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -22,11 +22,11 @@ import java.util.stream.Collectors;
 @AllArgsConstructor
 
 public class UtilisateurServiceImpl implements UtilisateurService{
-    private CentreVaccMapper centreVaccMapper;
+    private CentreMapper centreVaccMapper;
 
     private UtilisateurRepository utilisateurRepository;
 
-    private CentreVaccinationRepository centreVaccinationRepository;
+    private CentreRepository centreRepository;
 
     private  UtilisateurMapper utilisateurMapper;
     @Override
@@ -53,20 +53,18 @@ public class UtilisateurServiceImpl implements UtilisateurService{
     }
 
     @Override
-    public UtilisateurDTO saveUser(UtilisateurDTO utilisateurDTO,Long centreId) throws CentreNotFoundException{
-      CentreVaccination centre=centreVaccinationRepository.findById(centreId)
-              .orElseThrow(()->new CentreNotFoundException("Centre Introuvable"));
+    public UtilisateurDTO saveUser(UtilisateurDTO utilisateurDTO,Long centreId) throws EntityNotFoundException{
+      Centre centre= centreRepository.findById(centreId)
+              .orElseThrow(()->new EntityNotFoundException("Centre Introuvable"));
 
-      CentreVaccinationDTO centreVaccinationDTO=centreVaccMapper.fromCentreVaccination(centre);
+      CentreDTO CentreDTO=centreVaccMapper.asCentreDTO(centre);
 
 
-         utilisateurDTO.setCentreVaccinationDTO(centreVaccinationDTO);
+         utilisateurDTO.setCentreVaccinationDTO(CentreDTO);
 
-        //centreVaccinationDTO.getUtilisateurDTOListDTO().add(utilisateurDTO);
+        //CentreDTO.getUtilisateurDTOListDTO().add(utilisateurDTO);
 
       Utilisateur user=utilisateurMapper.fromUtilisateurDTO(utilisateurDTO);
-
-      centre.getUtilisateurs().add(user);
 
       Utilisateur user1=utilisateurRepository.save(user);
 

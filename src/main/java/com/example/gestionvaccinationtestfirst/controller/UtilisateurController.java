@@ -1,7 +1,7 @@
 package com.example.gestionvaccinationtestfirst.controller;
 
 import com.example.gestionvaccinationtestfirst.DTos.UtilisateurDTO;
-import com.example.gestionvaccinationtestfirst.Excepyion.CentreNotFoundException;
+import com.example.gestionvaccinationtestfirst.Excepyion.EntityNotFoundException;
 import com.example.gestionvaccinationtestfirst.Excepyion.UtilisateurNotFoundException;
 import com.example.gestionvaccinationtestfirst.service.UserService.UtilisateurService;
 import lombok.AllArgsConstructor;
@@ -38,7 +38,7 @@ public class UtilisateurController {
     }
 
     @PostMapping("/users/{centreId}")
-    public UtilisateurDTO saveUser(@RequestBody UtilisateurDTO utilisateurDTO,@PathVariable Long centreId) throws CentreNotFoundException {
+    public UtilisateurDTO saveUser(@RequestBody UtilisateurDTO utilisateurDTO,@PathVariable Long centreId) throws EntityNotFoundException {
         return utilisateurService.saveUser(utilisateurDTO,centreId);
     }
 }

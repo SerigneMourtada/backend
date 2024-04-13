@@ -19,6 +19,6 @@ public class UtilisateurDTO {
     private String password;
 
 
-    private CentreVaccinationDTO centreVaccinationDTO;
+    private CentreDTO centreVaccinationDTO;
 
 }

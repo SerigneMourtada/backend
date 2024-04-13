@@ -1,22 +1,20 @@
 package com.example.gestionvaccinationtestfirst.service.ParentService;
 
-import com.example.gestionvaccinationtestfirst.DTos.CentreVaccinationDTO;
+import com.example.gestionvaccinationtestfirst.DTos.CentreDTO;
 import com.example.gestionvaccinationtestfirst.DTos.ParentDTO;
-import com.example.gestionvaccinationtestfirst.Excepyion.CentreNotFoundException;
-import com.example.gestionvaccinationtestfirst.Excepyion.ParentNotFoundException;
-import com.example.gestionvaccinationtestfirst.dtoMapper.centreMapper.CentreVaccMapper;
+import com.example.gestionvaccinationtestfirst.dtoMapper.centreMapper.CentreMapper;
 import com.example.gestionvaccinationtestfirst.dtoMapper.parentMapper.ParentMapper;
-import com.example.gestionvaccinationtestfirst.model.CentreVaccination;
+import com.example.gestionvaccinationtestfirst.model.Centre;
 import com.example.gestionvaccinationtestfirst.model.Parent;
-import com.example.gestionvaccinationtestfirst.repository.CentreVaccinationRepository;
+import com.example.gestionvaccinationtestfirst.repository.CentreRepository;
 import com.example.gestionvaccinationtestfirst.repository.ParentRepository;
 import com.example.gestionvaccinationtestfirst.repository.UtilisateurRepository;
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.text.MessageFormat;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -26,9 +24,9 @@ import java.util.stream.Collectors;
 @AllArgsConstructor
 
 public class ParentServiceImpl implements ParentService{
-    private CentreVaccinationRepository centreVaccinationRepository;
+    private CentreRepository centreRepository;
 
-    private CentreVaccMapper centreVaccMapper;
+    private CentreMapper centreVaccMapper;
 
     private ParentRepository parentRepository;
 
@@ -45,9 +43,9 @@ public class ParentServiceImpl implements ParentService{
     }
 
     @Override
-    public ParentDTO getParent(Long parentId) throws ParentNotFoundException {
-        Parent parent=parentRepository.findById(parentId)
-                .orElseThrow(()->new ParentNotFoundException("Parent Not Found"));
+    public ParentDTO getParent(Long parentId){
+        Parent parent=parentRepository.findById(parentId).
+                orElseThrow(() -> new jakarta.persistence.EntityNotFoundException(MessageFormat.format("Not found kpi with id {0}", parentId)));
         return parentMapper.fromParent(parent);
     }
 
@@ -60,16 +58,15 @@ public class ParentServiceImpl implements ParentService{
 
     @Override
     public ParentDTO saveParent(ParentDTO parentDTO, String email){
-        CentreVaccination centre= utilisateurRepository.findByEmail(email).getCentreVaccination();
+        Centre centre= utilisateurRepository.findByEmail(email).getCentre();
 
-        CentreVaccinationDTO centreVaccinationDTO=centreVaccMapper.fromCentreVaccination(centre);
+        CentreDTO centreVaccinationDTO=centreVaccMapper.asCentreDTO(centre);
         //centreVaccinationDTO.getParentsDTO().add(parentDTO);
 
         parentDTO.setCentreVaccinationDTO(centreVaccinationDTO);
 
         Parent parent=parentMapper.fromParentDTO(parentDTO);
 
-        centre.getParents().add(parent);
 
         Parent parent1=parentRepository.save(parentMapper.fromParentDTO(parentDTO));
 
@@ -85,9 +82,9 @@ public class ParentServiceImpl implements ParentService{
     }
 
     @Override
-    public ParentDTO saveParent(ParentDTO parentDTO, Long centreId) throws CentreNotFoundException {
-       CentreVaccination centre= centreVaccinationRepository.findById(centreId).
-                orElseThrow(()->new CentreNotFoundException("Centre Introuvable"));
+    public ParentDTO saveParent(ParentDTO parentDTO, Long centreId)  {
+       Centre centre= centreRepository.findById(centreId).
+                orElseThrow(null);
 
        CentreVaccinationDTO centreVaccinationDTO=centreVaccMapper.fromCentreVaccination(centre);
        parentDTO.setCentreVaccinationDTO(centreVaccinationDTO);
@@ -95,7 +92,6 @@ public class ParentServiceImpl implements ParentService{
 
       Parent parent= parentMapper.fromParentDTO(parentDTO);
 
-      centre.getParents().add(parent);
 
       Parent parent1=parentRepository.save(parent);
 

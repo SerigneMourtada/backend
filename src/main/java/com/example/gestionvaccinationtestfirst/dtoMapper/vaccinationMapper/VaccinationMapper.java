@@ -16,20 +16,18 @@ public class VaccinationMapper {
     private VaccinMapper vaccinMapper;
 
 
-    private EnfantMapper enfantMapper;
+    //private EnfantMapper enfantMapper;
 
     public Vaccination fromVaccinationDTO(VaccinationDTO vaccinationDTO){
         Vaccination vaccination=new Vaccination();
         BeanUtils.copyProperties(vaccinationDTO,vaccination);
         vaccination.setVaccin(vaccinMapper.fromVaccinDTO(vaccinationDTO.getVaccinDTO()));
-        vaccination.setEnfant(enfantMapper.fromEnfantDTO(vaccinationDTO.getEnfantDTO()));
         return vaccination;
     }
     public VaccinationDTO fromVaccination(Vaccination vaccination){
         VaccinationDTO vaccinationDTO=new VaccinationDTO();
         BeanUtils.copyProperties(vaccination,vaccinationDTO);
         vaccinationDTO.setVaccinDTO(vaccinMapper.fromVaccin(vaccination.getVaccin()));
-        vaccinationDTO.setEnfantDTO(enfantMapper.fromEnfant(vaccination.getEnfant()));
         return vaccinationDTO;
     }
 }

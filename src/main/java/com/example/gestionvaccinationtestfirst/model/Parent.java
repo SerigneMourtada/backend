@@ -5,7 +5,6 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.ArrayList;
 import java.util.Collection;
 
 @Entity
@@ -30,7 +29,7 @@ public class Parent {
     private Collection<Enfant> enfants;
 
     @ManyToOne
-    private CentreVaccination centreVaccination;
+    private Centre centre;
 
     @OneToOne(orphanRemoval = true)
       private Rendez_Vous rendezVous;

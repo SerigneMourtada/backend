@@ -1,31 +1,33 @@
 package com.example.gestionvaccinationtestfirst.model;
 
 import jakarta.persistence.*;
+import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.experimental.FieldDefaults;
 
 import java.util.List;
 
 @Entity
 @Data
 @AllArgsConstructor @NoArgsConstructor
+@FieldDefaults(level = AccessLevel.PRIVATE)
 public class Carnet {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    Long id;
 
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "enfant_id", referencedColumnName = "id")
-    private Enfant enfant;
+    Enfant enfant;
 
     @OneToMany(mappedBy = "carnet")
-    private List<Rendez_Vous> rendezVousList;
-
+    List<Rendez_Vous> rendezVousList;
 
     @ManyToOne
-    private Utilisateur utilisateur;
+    Utilisateur parent;
 
 
     @OneToMany(mappedBy = "carnet",cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Vaccination> vaccinationList;
+    List<Vaccination> vaccinationList;
 }
